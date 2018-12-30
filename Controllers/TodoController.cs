@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Models;
 
@@ -79,6 +80,12 @@ namespace MvcMovie.Controllers
             await _context.SaveChangesAsync();
 
             return todoItem;
+        }
+
+        [HttpGet("exception")]
+        public async Task<IActionResult> GetException()
+        {
+            throw new RuntimeBinderException("Something went intentionally wrong.");
         }
     }
 }
