@@ -51,5 +51,34 @@ namespace MvcMovie.Controllers
 
             return CreatedAtAction("GetTodoItem", new {id = todoItem.Id}, todoItem);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutTodoItem(long id, TodoItem todo)
+        {
+            if (id != todo.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(todo).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<TodoItem>> DeleteTodoItem(long id)
+        {
+            var todoItem = await _context.TodoItems.FindAsync(id);
+            if (todoItem == null)
+            {
+                return NotFound();
+            }
+
+            _context.TodoItems.Remove(todoItem);
+            await _context.SaveChangesAsync();
+
+            return todoItem;
+        }
     }
 }
