@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Models;
+using MvcMovie.TypeConverts;
+using Newtonsoft.Json;
 
 namespace MvcMovie.Controllers
 {
@@ -83,9 +85,15 @@ namespace MvcMovie.Controllers
         }
 
         [HttpGet("exception")]
-        public async Task<IActionResult> GetException()
+        public IActionResult GetException()
         {
             throw new RuntimeBinderException("Something went intentionally wrong.");
+        }
+        
+        [HttpGet("typeConvert")]
+        public IActionResult GetConverter([FromQuery(Name = "filter")] TodoItemFilter filters)
+        {
+            return Ok($"{filters.Id}, {filters.Name}, {filters.IsComplete}");
         }
     }
 }
