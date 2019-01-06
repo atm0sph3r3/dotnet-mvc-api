@@ -91,9 +91,9 @@ namespace MvcMovie.Controllers
         }
         
         [HttpGet("typeConvert")]
-        public IActionResult GetConverter([FromQuery(Name = "filter")] TodoItemFilter filters)
+        public IActionResult GetConverter([FromQuery(Name = "filters")] TodoItemFilters filters)
         {
-            return Ok($"{filters.Id}, {filters.Name}, {filters.IsComplete}");
+            return Ok(filters);
         }
     }
 }
